@@ -1,0 +1,653 @@
+[
+  { "name": "AlreadyWithdrawnMaximumAmount", "type": "error", "inputs": [] },
+  { "name": "AttendeeAlreadyRegistered", "type": "error", "inputs": [] },
+  { "name": "CouponExpired", "type": "error", "inputs": [] },
+  { "name": "DiscountExceeds100Percent", "type": "error", "inputs": [] },
+  { "name": "EventAlreadyCancelled", "type": "error", "inputs": [] },
+  { "name": "EventDateInPast", "type": "error", "inputs": [] },
+  { "name": "EventDoesNotExist", "type": "error", "inputs": [] },
+  { "name": "EventFull", "type": "error", "inputs": [] },
+  { "name": "EventIsFree", "type": "error", "inputs": [] },
+  { "name": "ExpiryDateInPast", "type": "error", "inputs": [] },
+  { "name": "InsufficientPayment", "type": "error", "inputs": [] },
+  { "name": "InvalidEndDate", "type": "error", "inputs": [] },
+  { "name": "NoFundsToWithdraw", "type": "error", "inputs": [] },
+  { "name": "OwnerDoesNotExist", "type": "error", "inputs": [] },
+  { "name": "TransferFailed", "type": "error", "inputs": [] },
+  { "name": "UnauthorizedEdit", "type": "error", "inputs": [] },
+  {
+    "name": "AttendeeRegistered",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "eventId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "attendeeName",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "attendeeEmail",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "attendeePhone",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "CouponCodeSet",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "eventId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "couponCode",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "discount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "expiryDate",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "EventCancelled",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "eventId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "reason",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "EventCreated",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "eventId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "eventName",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "ownerAddress",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "EventUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "eventId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "eventName",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "eventPrice",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "eventStartDateAndTime",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "eventLocation",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "FundsWithdrawn",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "eventId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "OwnerInfoUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "ownerAddress",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      },
+      {
+        "name": "ownerName",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "ownerPic",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "ownerEmail",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "cancelEvent",
+    "type": "function",
+    "inputs": [
+      { "name": "_eventId", "type": "uint256", "internalType": "uint256" },
+      { "name": "_reason", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "createEvent",
+    "type": "function",
+    "inputs": [
+      { "name": "_maxCapacity", "type": "uint16", "internalType": "uint16" },
+      { "name": "_eventPrice", "type": "uint256", "internalType": "uint256" },
+      {
+        "name": "_eventStartDateAndTime",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_eventEndDateAndTime",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      { "name": "_eventName", "type": "string", "internalType": "string" },
+      { "name": "_eventBanner", "type": "string", "internalType": "string" },
+      {
+        "name": "_eventDescription",
+        "type": "string",
+        "internalType": "string"
+      },
+      { "name": "_eventLocation", "type": "string", "internalType": "string" },
+      { "name": "_eventIsPrivate", "type": "bool", "internalType": "bool" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "eventAttendees",
+    "type": "function",
+    "inputs": [
+      { "name": "", "type": "uint256", "internalType": "uint256" },
+      { "name": "", "type": "address", "internalType": "address" }
+    ],
+    "outputs": [
+      {
+        "name": "attendeeAddress",
+        "type": "address",
+        "internalType": "address"
+      },
+      { "name": "name", "type": "string", "internalType": "string" },
+      { "name": "email", "type": "string", "internalType": "string" },
+      { "name": "phone", "type": "string", "internalType": "string" },
+      { "name": "couponCode", "type": "string", "internalType": "string" }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "eventOwners",
+    "type": "function",
+    "inputs": [{ "name": "", "type": "address", "internalType": "address" }],
+    "outputs": [
+      { "name": "ownerAddress", "type": "address", "internalType": "address" },
+      { "name": "ownerName", "type": "string", "internalType": "string" },
+      { "name": "ownerPic", "type": "string", "internalType": "string" },
+      { "name": "ownerEmail", "type": "string", "internalType": "string" },
+      { "name": "ownerAbout", "type": "string", "internalType": "string" }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "events",
+    "type": "function",
+    "inputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "outputs": [
+      { "name": "eventId", "type": "uint256", "internalType": "uint256" },
+      { "name": "maxCapacity", "type": "uint16", "internalType": "uint16" },
+      { "name": "noOfAttendees", "type": "uint16", "internalType": "uint16" },
+      { "name": "couponDiscount", "type": "uint16", "internalType": "uint16" },
+      { "name": "eventPrice", "type": "uint256", "internalType": "uint256" },
+      {
+        "name": "eventStartDateAndTime",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "eventEndDateAndTime",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "couponExpiryDate",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      { "name": "eventName", "type": "string", "internalType": "string" },
+      { "name": "eventBanner", "type": "string", "internalType": "string" },
+      {
+        "name": "eventDescription",
+        "type": "string",
+        "internalType": "string"
+      },
+      { "name": "eventLocation", "type": "string", "internalType": "string" },
+      { "name": "couponCode", "type": "string", "internalType": "string" },
+      { "name": "eventIsPrivate", "type": "bool", "internalType": "bool" },
+      { "name": "eventIsFree", "type": "bool", "internalType": "bool" },
+      { "name": "isCancelled", "type": "bool", "internalType": "bool" },
+      { "name": "owner", "type": "address", "internalType": "address" }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getAllEvents",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple[]",
+        "components": [
+          { "name": "eventId", "type": "uint256", "internalType": "uint256" },
+          { "name": "maxCapacity", "type": "uint16", "internalType": "uint16" },
+          {
+            "name": "noOfAttendees",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "couponDiscount",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "eventPrice",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "eventStartDateAndTime",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "eventEndDateAndTime",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "couponExpiryDate",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          { "name": "eventName", "type": "string", "internalType": "string" },
+          { "name": "eventBanner", "type": "string", "internalType": "string" },
+          {
+            "name": "eventDescription",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "eventLocation",
+            "type": "string",
+            "internalType": "string"
+          },
+          { "name": "couponCode", "type": "string", "internalType": "string" },
+          { "name": "eventIsPrivate", "type": "bool", "internalType": "bool" },
+          { "name": "eventIsFree", "type": "bool", "internalType": "bool" },
+          { "name": "isCancelled", "type": "bool", "internalType": "bool" },
+          { "name": "owner", "type": "address", "internalType": "address" }
+        ],
+        "internalType": "struct EventMgmtLib.Event[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getAttendeesForEvent",
+    "type": "function",
+    "inputs": [
+      { "name": "_eventId", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "attendeeAddress",
+            "type": "address",
+            "internalType": "address"
+          },
+          { "name": "name", "type": "string", "internalType": "string" },
+          { "name": "email", "type": "string", "internalType": "string" },
+          { "name": "phone", "type": "string", "internalType": "string" },
+          { "name": "couponCode", "type": "string", "internalType": "string" }
+        ],
+        "internalType": "struct EventMgmtLib.Attendee[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getEventById",
+    "type": "function",
+    "inputs": [
+      { "name": "_eventId", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "components": [
+          { "name": "eventId", "type": "uint256", "internalType": "uint256" },
+          { "name": "maxCapacity", "type": "uint16", "internalType": "uint16" },
+          {
+            "name": "noOfAttendees",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "couponDiscount",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "eventPrice",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "eventStartDateAndTime",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "eventEndDateAndTime",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "couponExpiryDate",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          { "name": "eventName", "type": "string", "internalType": "string" },
+          { "name": "eventBanner", "type": "string", "internalType": "string" },
+          {
+            "name": "eventDescription",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "eventLocation",
+            "type": "string",
+            "internalType": "string"
+          },
+          { "name": "couponCode", "type": "string", "internalType": "string" },
+          { "name": "eventIsPrivate", "type": "bool", "internalType": "bool" },
+          { "name": "eventIsFree", "type": "bool", "internalType": "bool" },
+          { "name": "isCancelled", "type": "bool", "internalType": "bool" },
+          { "name": "owner", "type": "address", "internalType": "address" }
+        ],
+        "internalType": "struct EventMgmtLib.Event"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getOwnerEvents",
+    "type": "function",
+    "inputs": [
+      { "name": "_owner", "type": "address", "internalType": "address" }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple[]",
+        "components": [
+          { "name": "eventId", "type": "uint256", "internalType": "uint256" },
+          { "name": "maxCapacity", "type": "uint16", "internalType": "uint16" },
+          {
+            "name": "noOfAttendees",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "couponDiscount",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "eventPrice",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "eventStartDateAndTime",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "eventEndDateAndTime",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "couponExpiryDate",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          { "name": "eventName", "type": "string", "internalType": "string" },
+          { "name": "eventBanner", "type": "string", "internalType": "string" },
+          {
+            "name": "eventDescription",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "eventLocation",
+            "type": "string",
+            "internalType": "string"
+          },
+          { "name": "couponCode", "type": "string", "internalType": "string" },
+          { "name": "eventIsPrivate", "type": "bool", "internalType": "bool" },
+          { "name": "eventIsFree", "type": "bool", "internalType": "bool" },
+          { "name": "isCancelled", "type": "bool", "internalType": "bool" },
+          { "name": "owner", "type": "address", "internalType": "address" }
+        ],
+        "internalType": "struct EventMgmtLib.Event[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "registerForFreeEvent",
+    "type": "function",
+    "inputs": [
+      { "name": "_eventId", "type": "uint256", "internalType": "uint256" },
+      { "name": "_attendeeName", "type": "string", "internalType": "string" },
+      { "name": "_attendeeEmail", "type": "string", "internalType": "string" },
+      { "name": "_attendeePhone", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "registerForPaidEvent",
+    "type": "function",
+    "inputs": [
+      { "name": "_eventId", "type": "uint256", "internalType": "uint256" },
+      { "name": "_attendeeName", "type": "string", "internalType": "string" },
+      { "name": "_attendeeEmail", "type": "string", "internalType": "string" },
+      { "name": "_attendeePhone", "type": "string", "internalType": "string" },
+      { "name": "_couponCode", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [],
+    "stateMutability": "payable"
+  },
+  {
+    "name": "registeredAttendees",
+    "type": "function",
+    "inputs": [
+      { "name": "", "type": "uint256", "internalType": "uint256" },
+      { "name": "", "type": "address", "internalType": "address" }
+    ],
+    "outputs": [{ "name": "", "type": "bool", "internalType": "bool" }],
+    "stateMutability": "view"
+  },
+  {
+    "name": "setCouponCode",
+    "type": "function",
+    "inputs": [
+      { "name": "_eventId", "type": "uint256", "internalType": "uint256" },
+      { "name": "_code", "type": "string", "internalType": "string" },
+      { "name": "_discount", "type": "uint16", "internalType": "uint16" },
+      { "name": "_expiryDate", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "totalEventCount",
+    "type": "function",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "name": "totalOwnerCount",
+    "type": "function",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "name": "updateEvent",
+    "type": "function",
+    "inputs": [
+      { "name": "_eventId", "type": "uint256", "internalType": "uint256" },
+      { "name": "_eventName", "type": "string", "internalType": "string" },
+      { "name": "_eventPrice", "type": "uint256", "internalType": "uint256" },
+      {
+        "name": "_eventStartDateAndTime",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      { "name": "_eventLocation", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "updateOwnerInfo",
+    "type": "function",
+    "inputs": [
+      { "name": "_ownerName", "type": "string", "internalType": "string" },
+      { "name": "_ownerPic", "type": "string", "internalType": "string" },
+      { "name": "_ownerEmail", "type": "string", "internalType": "string" },
+      { "name": "_ownerAbout", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "withdrawEventFunds",
+    "type": "function",
+    "inputs": [
+      { "name": "_eventId", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "withdrawnAmounts",
+    "type": "function",
+    "inputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  { "type": "receive", "stateMutability": "payable" }
+]

@@ -1,0 +1,8 @@
+{
+  "base-sepolia": {
+    "EventMgmt": {
+      "address": "0x173A35de308c2B00B19D5102e4068BbD338fAD32",
+      "startBlock": 19122172
+    }
+  }
+}

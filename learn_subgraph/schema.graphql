@@ -1,0 +1,72 @@
+type AttendeeRegistered @entity(immutable: true) {
+  id: Bytes!
+  eventId: BigInt! # uint256
+  attendeeName: String! # string
+  attendeeEmail: String! # string
+  attendeePhone: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CouponCodeSet @entity(immutable: true) {
+  id: Bytes!
+  eventId: BigInt! # uint256
+  couponCode: String! # string
+  discount: BigInt! # uint256
+  expiryDate: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EventCancelled @entity(immutable: true) {
+  id: Bytes!
+  eventId: BigInt! # uint256
+  reason: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EventCreated @entity(immutable: true) {
+  id: Bytes!
+  eventId: BigInt! # uint256
+  eventName: String! # string
+  ownerAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EventUpdated @entity(immutable: true) {
+  id: Bytes!
+  eventId: BigInt! # uint256
+  eventName: String! # string
+  eventPrice: BigInt! # uint256
+  eventStartDateAndTime: BigInt! # uint256
+  eventLocation: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FundsWithdrawn @entity(immutable: true) {
+  id: Bytes!
+  eventId: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnerInfoUpdated @entity(immutable: true) {
+  id: Bytes!
+  ownerAddress: Bytes! # address
+  ownerName: String! # string
+  ownerPic: String! # string
+  ownerEmail: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
